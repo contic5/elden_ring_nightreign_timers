@@ -1,11 +1,13 @@
 class Timer
 {
-    constructor(event_name,starting_time)
+    constructor(event_name,start_time,max_time)
     {
         this.event_name=event_name;
 
-        this.starting_time=starting_time;
-        this.time=starting_time;
+        this.start_time=start_time;
+        this.max_time=max_time;
+        this.time=max_time;
+        this.time_passed=0;
 
         this.timer_div=document.createElement("div");
         this.timer_div.classList.add("timer_div");
@@ -42,11 +44,13 @@ class Timer
         if(this.time>0)
         {
             this.time=this.time-(test_speed_factor*interval_time/1000);
+            this.time_passed+=(test_speed_factor*interval_time/1000);
         }
     }
     reset_time()
     {
-        this.time=this.starting_time;
+        this.time=this.max_time;
+        this.time_passed=0;
 
         this.update_path();
     }
@@ -104,13 +108,28 @@ class Timer
             this.path.setAttribute("stroke","darkred");
         }
 
-        let angle=2*Math.PI*(this.time/this.starting_time)+0.01;
+
+        let percent_complete=(this.time_passed-this.start_time)/(this.max_time-this.start_time);
+        percent_complete*=2*Math.PI;
+        let angle=2*Math.PI-percent_complete;
+
+        let d="";
+        if(this.time_passed<this.start_time)
+        {
+            d=this.get_full_circle();
+            this.path.setAttribute("d",d);
+            return;
+        }
+        if(angle<0.02)
+        {
+            this.path.setAttribute("d",d);
+            return;
+        }
 
         let x=radius*Math.cos(angle)+center_x;
         let y=radius*Math.sin(angle)+center_y;
         
        
-        let d="";
         if(angle>2*Math.PI-0.01)
         {
             d=this.get_full_circle();
@@ -125,15 +144,9 @@ class Timer
             d+="Z";
         }
         
-
         this.path.setAttribute("d",d);
 
-        if(angle<0.02)
-        {
-            this.path.setAttribute("d","");
-        }
-
-        if(this.starting_time==270)
+        if(this.max_time==270)
         {
             //console.log(angle);
         }
@@ -188,10 +201,10 @@ function toggle_timers()
 }
 function setup()
 {
-    timers.push(new Timer("First Circle Starts",270));
-    timers.push(new Timer("First Circle Ends",450));
-    timers.push(new Timer("Second Circle Starts",660));
-    timers.push(new Timer("Second Circle Ends",840));
+    timers.push(new Timer("First Circle Starts",0,270));
+    timers.push(new Timer("First Circle Ends",270,450));
+    timers.push(new Timer("Second Circle Starts",450,660));
+    timers.push(new Timer("Second Circle Ends",660,840));
     
     for(let timer of timers)
     {
@@ -203,7 +216,7 @@ function setup()
 const timer_holder=document.getElementById("timer_holder");
 let interval_time=100;
 
-let test_speed_factor=1;
+let test_speed_factor=50;
 if(test_speed_factor!=1)
 {
     alert(`The time is going ${test_speed_factor}x faster than normal.<br> Set test_speed factor to 1 to avoid this.`);
