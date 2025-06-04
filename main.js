@@ -88,12 +88,12 @@ class Timer
     update_path()
     {
 
-        if(this.time>this.starting_time/2)
+        if(this.time>120)
         {
             this.path.setAttribute("fill","lightgreen");
             this.path.setAttribute("stroke","green");
         }
-        else if(this.time>this.starting_time/4)
+        else if(this.time>60)
         {
             this.path.setAttribute("fill","gold");
             this.path.setAttribute("stroke","yellow");
