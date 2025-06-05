@@ -23,28 +23,3 @@ body
 {
     background-color: rgb(9, 9, 66);
 }
-:root
-{
-  font-family: "Open Sans", sans-serif;
-}
-#timer_holder
-{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-width: 800px;
-}
-.timer_div
-{
-    text-align: center;
-}
-main
-{
-    max-width: 800px;
-    padding: 10px;
-    margin: auto;
-    background-color: bisque;
-}
-body
-{
-    background-color: rgb(9, 9, 66);
-}
