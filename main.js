@@ -58,9 +58,11 @@ class Timer
     {
         let written_time="";
         let minutes=Math.floor(this.time/60);
+        minutes=Math.max(minutes,0);
         let written_minutes=minutes.toString();
 
         let seconds=Math.floor(this.time-60*minutes);
+        seconds=Math.max(seconds,0);
         let written_seconds=seconds.toString();
         if(written_seconds.length<2)
         {

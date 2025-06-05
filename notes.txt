@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 4:30 First Circle Starts
 7:30 First Circle Ends
 11:00 Second Circle Starts
-=======
-4:30 First Circle Starts
-7:30 First Circle Ends
-11:00 Second Circle Starts
->>>>>>> 22e9525 (Initial commit)
 14:00 Second Circle Ends
