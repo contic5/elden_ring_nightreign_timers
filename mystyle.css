@@ -6,7 +6,11 @@
 {
     max-width: 800px;
 }
-#timer_holder_grid
+.timer_holder_regular_mode
+{
+    max-width: 800px;
+}
+.timer_holder_grid_mode
 {
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -38,4 +42,8 @@ body
 button
 {
     font-size: 24px;
+}
+.margin_bottom
+{
+    margin-bottom: 20px;
 }

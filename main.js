@@ -2,6 +2,8 @@ class Timer
 {
     constructor(event_name,start_time,max_time)
     {
+        this.timer_mode=timer_mode;
+
         this.event_name=event_name;
 
         this.start_time=start_time;
@@ -20,6 +22,15 @@ class Timer
         this.time_h2=document.createElement("h2");
         this.timer_div.appendChild(this.time_h2);
 
+        this.setup_svg();
+    }
+    setup_svg()
+    {
+        if(this.svg_element!=null)
+        {
+            console.log("Removing svg path");
+            this.svg_element.remove();
+        }
         this.svg_element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
         this.svg_element.setAttribute("width",svg_size);
         this.svg_element.setAttribute("height",svg_size);
@@ -46,7 +57,7 @@ class Timer
             this.time=this.time-(test_speed_factor*interval_time/1000);
             this.time_passed+=(test_speed_factor*interval_time/1000);
 
-            if(this.time<=0)
+            if(this.time<=0&&timer_mode=="one_at_a_time")
             {
                 this.timer_div.style.display="none";
             }
@@ -160,6 +171,21 @@ class Timer
             //console.log(angle);
         }
     }
+    set_mode(new_mode)
+    {
+        this.timer_mode=new_mode;
+        if(this.timer_mode=="one_at_a_time")
+        {
+            if(this.time<=0)
+            {
+                this.timer_div.style.display="none";
+            }
+        }
+        else if(this.timer_mode=="display_all_at_once")
+        {
+            this.timer_div.style.display="block";
+        }
+    }
 }
 
 function update_timers()
@@ -208,6 +234,44 @@ function toggle_timers()
         resume_timers();
     }
 }
+function set_svg_size()
+{
+    center_x=svg_size/2;
+    center_y=svg_size/2;
+    radius=(svg_size-10)/2;
+
+    start_x=radius*Math.cos(0)+center_x;
+    start_y=radius*Math.sin(0)+center_y;
+
+    mid_x=radius*Math.cos(Math.PI)+center_x;
+    mid_y=radius*Math.sin(Math.PI)+center_y;
+
+    for(let timer of timers)
+    {
+        timer.setup_svg();
+    }
+}
+function set_mode(new_mode)
+{
+    timer_holder.classList.remove(...timer_holder.classList);
+    timer_mode=new_mode;
+    if(new_mode=="one_at_a_time")
+    {
+        timer_holder.classList.add("timer_holder_regular_mode");
+        svg_size=600;
+    }
+    else if(new_mode=="display_all_at_once")
+    {
+        timer_holder.classList.add("timer_holder_grid_mode");
+        svg_size=300;
+    }
+    set_svg_size();
+
+    for(let timer of timers)
+    {
+        timer.set_mode(new_mode);
+    }
+}
 function setup()
 {
     timers.push(new Timer("First Circle Starts",0,270));
@@ -219,13 +283,13 @@ function setup()
     {
         timer.display_current_time();
     }
-    my_interval=setInterval(update_timers,interval_time);
+    //my_interval=setInterval(update_timers,interval_time);
 }
 
-const timer_holder=document.getElementById("timer_holder");
+let timer_holder=document.getElementById("timer_holder");
 let interval_time=100;
 
-let test_speed_factor=50;
+let test_speed_factor=100;
 if(test_speed_factor!=1)
 {
     alert(`The time is going ${test_speed_factor}x faster than normal.<br> Set test_speed factor to 1 to avoid this.`);
@@ -233,15 +297,16 @@ if(test_speed_factor!=1)
 let timers=[];
 let my_interval=null;
 
-const svg_size=600;
-const center_x=svg_size/2;
-const center_y=svg_size/2;
-const radius=(svg_size-10)/2;
+let svg_size=600;
+let center_x=svg_size/2;
+let center_y=svg_size/2;
+let radius=(svg_size-10)/2;
 
-const start_x=radius*Math.cos(0)+center_x;
-const start_y=radius*Math.sin(0)+center_y;
+let start_x=radius*Math.cos(0)+center_x;
+let start_y=radius*Math.sin(0)+center_y;
 
-const mid_x=radius*Math.cos(Math.PI)+center_x;
-const mid_y=radius*Math.sin(Math.PI)+center_y;
+let mid_x=radius*Math.cos(Math.PI)+center_x;
+let mid_y=radius*Math.sin(Math.PI)+center_y;
 
+let timer_mode="regular";
 setup();

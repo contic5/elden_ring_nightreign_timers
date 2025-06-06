@@ -10,9 +10,15 @@
 <main>
 <h1>Elden Ring Nightreign Timers</h1>
 
-<div class="center">
+<h2>Settings</h2>
+<div class="center margin_bottom">
+<button onclick="set_mode('one_at_a_time')">One at a Time</button>
+<button onclick="set_mode('display_all_at_once')">All at Once</button>
+</div>
+
+<div class="center margin_bottom">
 <button onclick="reset_timers()">Reset Timers</button>
-<button onclick="toggle_timers()" id="toggle_button">Pause Timers</button>
+<button onclick="toggle_timers()" id="toggle_button">Start Timers</button>
 </div>
 <div id="timer_holder">
 
