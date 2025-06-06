@@ -4,12 +4,11 @@
 }
 #timer_holder
 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     max-width: 800px;
 }
 .timer_div
 {
+    display:block;
     text-align: center;
 }
 main
@@ -18,8 +17,19 @@ main
     padding: 10px;
     margin: auto;
     background-color: bisque;
+
+    min-height: 100vh;
 }
 body
 {
     background-color: rgb(9, 9, 66);
+}
+.center
+{
+    margin: auto;
+    text-align: center;
+}
+button
+{
+    font-size: 24px;
 }

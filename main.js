@@ -21,9 +21,9 @@ class Timer
         this.timer_div.appendChild(this.time_h2);
 
         this.svg_element=document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.svg_element.setAttribute("width","250");
-        this.svg_element.setAttribute("height","250");
-        this.svg_element.setAttribute("viewBox","0 0 250 250");
+        this.svg_element.setAttribute("width",svg_size);
+        this.svg_element.setAttribute("height",svg_size);
+        this.svg_element.setAttribute("viewBox",`0 0 ${svg_size} ${svg_size}`);
         this.timer_div.appendChild(this.svg_element);
 
         this.background_path=document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -45,10 +45,17 @@ class Timer
         {
             this.time=this.time-(test_speed_factor*interval_time/1000);
             this.time_passed+=(test_speed_factor*interval_time/1000);
+
+            if(this.time<=0)
+            {
+                this.timer_div.style.display="none";
+            }
         }
     }
     reset_time()
     {
+        this.timer_div.style.display="block";
+
         this.time=this.max_time;
         this.time_passed=0;
 
@@ -226,9 +233,10 @@ if(test_speed_factor!=1)
 let timers=[];
 let my_interval=null;
 
-const center_x=125;
-const center_y=125;
-const radius=120;
+const svg_size=600;
+const center_x=svg_size/2;
+const center_y=svg_size/2;
+const radius=(svg_size-10)/2;
 
 const start_x=radius*Math.cos(0)+center_x;
 const start_y=radius*Math.sin(0)+center_y;
